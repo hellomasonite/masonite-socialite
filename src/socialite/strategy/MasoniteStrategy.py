@@ -1,11 +1,22 @@
 from masonite.helpers import config
-from social_core.strategy import BaseStrategy
+from social_core.strategy import BaseStrategy, BaseTemplateStrategy
 from social_core.utils import build_absolute_uri
 
 from config import socialite
 
 
+class MasoniteBaseTemplateStrategy(BaseTemplateStrategy):
+
+    def render_template(self, tpl, context):
+        pass
+
+    def render_string(self, html, context):
+        return html
+
+
 class MasoniteStrategy(BaseStrategy):
+    DEFAULT_TEMPLATE_STRATEGY = MasoniteBaseTemplateStrategy
+
     def __init__(self, storage=None, tpl=None, request=None):
         super().__init__(storage, tpl)
         self.request = request
@@ -21,6 +32,8 @@ class MasoniteStrategy(BaseStrategy):
         return content
 
     def request_data(self, merge=True):
+        if not merge:
+            return {}
         return self.request.all()
 
     def request_host(self):
@@ -36,6 +49,7 @@ class MasoniteStrategy(BaseStrategy):
         self.session.set(name, value)
         if hasattr(self.session, 'modified'):
             self.session.set('modified', True)
+        return value
 
     def session_pop(self, name):
         self.session.set(name, None)
@@ -62,10 +76,10 @@ class MasoniteStrategy(BaseStrategy):
         return self.request.environ.get('SERVER_PORT')
 
     def request_get(self):
-        return self.request_data(merge=False)
+        return self.request_data(merge=True)
 
     def request_post(self):
-        return self.request_data(merge=False)
+        return self.request_data(merge=True)
 
     def authenticate(self, backend, *args, **kwargs):
         response = kwargs.get('response')

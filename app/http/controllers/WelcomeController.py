@@ -1,5 +1,4 @@
 """Welcome The User To Masonite."""
-import os
 
 from masonite.controllers import Controller
 from masonite.request import Request
@@ -31,5 +30,4 @@ class WelcomeController(Controller):
     @social_auth()
     def callback(self, request: Request, socialite: Socialite):
         user = socialite.driver('auth').user()
-        print(user)
-        return request.redirect('/home')
+        return request.redirect('/')

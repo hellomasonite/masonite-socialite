@@ -10,7 +10,7 @@ setup(
     package_dir={'': 'src'},
 
     description='Masonite socialite',
-    long_description='Basic Boilerplate Package',
+    long_description=open("README.md", "r").read(),
 
     # The project's main homepage.
     url='https://github.com/hellomasonite/masonite-socialite',

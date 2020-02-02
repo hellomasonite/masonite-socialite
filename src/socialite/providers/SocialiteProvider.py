@@ -1,6 +1,7 @@
 """A SocialiteProvider Service Provider."""
 
 from masonite.provider import ServiceProvider
+from social_core.backends.facebook import FacebookOAuth2
 
 from socialite import Socialite
 from socialite.SocialiteManager import SocialiteManager
@@ -24,3 +25,5 @@ class SocialiteProvider(ServiceProvider):
         """Boots services required by the container."""
         self.app.bind('Socialite', manager)
         self.app.swap(Socialite, manager)
+
+FacebookOAuth2

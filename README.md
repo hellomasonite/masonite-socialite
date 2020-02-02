@@ -58,7 +58,7 @@ from socialite.helpers import social_auth
 
 
 class SocialiteController(Controller):
-    """Controller For Welcoming The User."""
+    """Controller For Social Authentication."""
 
     @social_auth()
     def login(self, request: Request, socialite: Socialite):
@@ -71,6 +71,33 @@ class SocialiteController(Controller):
         return request.redirect('/home')
 ```
 
+* ## user()
+The user function, return an user instance that is namedtuple class.
+By default, this object has these fields:
+
+```
+uid # the user id provides by the provider
+fullname  # The full name of user
+first_name 
+last_name
+username
+email # if you request for it
+raw_data # the default data retrieves from the provider
+```
+
+You can now access on by using:
+```python
+print(user.username)
+print(user.first_name)
+```
+
+## Helpers
+1. **social_auth**
+
+This helper is a decorator that implement the logic of how the backends are 
+identified and loaded.
+
+
 Now you need to define the routes in the **routes/web.py**:
 
 ```python
@@ -82,6 +109,13 @@ ROUTES = [
     Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/callback', 'SocialiteController@callback').name('social.callback'),
     ...
 ]
+```
+
+The uri routes need to be started by **SOCIAL_AUTH_NAMESPACE**
+Without that your callback can be wrong.
+
+```python
+SOCIAL_AUTH_NAMESPACE = "social"
 ```
 
 Visit, [http://localhost:8000/social/facebook/login/](http://localhost:8000/social/facebook/login/)

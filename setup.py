@@ -13,7 +13,7 @@ setup(
     long_description='Basic Boilerplate Package',
 
     # The project's main homepage.
-    url='https://github.com/masoniteframework/starter-package',
+    url='https://github.com/hellomasonite/masonite-socialite',
 
     # Author details
     author='Corentin Allohoumbo',
@@ -47,10 +47,10 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
 
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
@@ -92,26 +92,4 @@ setup(
     extras_require={
         'test': ['coverage', 'pytest'],
     },
-
-    # If there are data files included in your packages that need to be
-    # installed, specify them here.  If using Python 2.6 or less, then these
-    # have to be included in MANIFEST.in as well.
-    ## package_data={
-    ##     'sample': [],
-    ## },
-
-    # Although 'package_data' is the preferred approach, in some case you may
-    # need to place data files outside of your packages. See:
-    # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
-    # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    ## data_files=[('my_data', ['data/data_file.txt'])],
-
-    # To provide executable scripts, use entry points in preference to the
-    # "scripts" keyword. Entry points provide cross-platform support and allow
-    # pip to create the appropriate form of executable for the target platform.
-    ## entry_points={
-    ##     'console_scripts': [
-    ##         'sample=sample:main',
-    ##     ],
-    ## },
 )

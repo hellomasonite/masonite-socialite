@@ -39,6 +39,13 @@ Create a new controller by running:
 ```bash
 craft controller SocialiteController
 ```
+if you want to add more scope, you can use 
+
+```python
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_likes']
+```
+
+For more information, please check [here](https://python-social-auth-docs.readthedocs.io/en/latest/backends/index.html)
 
 Add this code to your controller
 

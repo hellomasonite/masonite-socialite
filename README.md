@@ -21,11 +21,6 @@ PROVIDERS = [
 ]
 ```
 
-Add to the **config/application.py** file the code below:
-```python
-PORT = env('APP_PORT', 80)
-```
-
 After that craft the socialite config by running:
 ```bash
 craft socialite:install

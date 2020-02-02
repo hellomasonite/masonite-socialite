@@ -60,7 +60,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='space separated keywords like this',
+    keywords='social authentication masonite python',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().

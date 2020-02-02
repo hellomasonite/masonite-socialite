@@ -1,5 +1,6 @@
 # Masonite Socialite
-Make social authentication with all providers supported by social-auth-core package.
+Make social authentication with all providers supported by 
+[social-auth-core](https://github.com/python-social-auth/social-core) package.
 
 ## Installation
 

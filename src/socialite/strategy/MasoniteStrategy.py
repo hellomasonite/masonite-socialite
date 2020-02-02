@@ -18,7 +18,7 @@ class MasoniteStrategy(BaseStrategy):
         return getattr(socialite, name)
 
     def html(self, content):
-        pass
+        return content
 
     def request_data(self, merge=True):
         return self.request.all()

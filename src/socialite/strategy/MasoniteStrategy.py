@@ -59,7 +59,7 @@ class MasoniteStrategy(BaseStrategy):
         return self.request.path
 
     def request_port(self):
-        return config('application.PORT')
+        return self.request.environ.get('SERVER_PORT')
 
     def request_get(self):
         return self.request_data(merge=False)

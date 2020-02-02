@@ -76,8 +76,8 @@ from config.socialite import SOCIAL_AUTH_NAMESPACE
 
 ROUTES = [
     ...
-    Get(f'{SOCIAL_AUTH_NAMESPACE}/@backend/login', 'SocialiteController@login').name('social.login'),
-    Get(f'{SOCIAL_AUTH_NAMESPACE}/@backend/callback', 'SocialiteController@callback').name('social.callback'),
+    Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/login', 'SocialiteController@login').name('social.login'),
+    Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/callback', 'SocialiteController@callback').name('social.callback'),
     ...
 ]
 ```

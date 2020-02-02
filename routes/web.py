@@ -1,9 +1,10 @@
 """Web Routes."""
 
 from masonite.routes import Get, Post
+from config.socialite import SOCIAL_AUTH_NAMESPACE
 
 ROUTES = [
     Get('/home', 'WelcomeController@show').name('welcome'),
-    Get('/social/@backend/login', 'WelcomeController@auth').name('nice'),
-    Get('/social/@backend/callback', 'WelcomeController@callback').name('welcome'),
+    Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/login', 'WelcomeController@auth').name('nice'),
+    Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/callback', 'WelcomeController@callback').name('welcome'),
 ]

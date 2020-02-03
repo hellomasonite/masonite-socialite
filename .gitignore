@@ -10,4 +10,5 @@ package-lock.json
 !.env.testing
 *.egg-*
 .idea
-config/socialite.py
+masonite
+storage/logs/*

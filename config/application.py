@@ -35,8 +35,6 @@ Sets the root URL of the application. This is primarily used for testing
 
 URL = env('APP_URL', 'http://localhost:8000')
 
-PORT = env('APP_PORT', 80)
-
 """Base Directory
 Sets the root path of your project
 """

@@ -1,4 +1,4 @@
-"""A InstallCommand Command."""
+"""A InstallCommand Command for Masonite Socialite."""
 import os
 
 from cleo import Command

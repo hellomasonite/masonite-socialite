@@ -28,14 +28,18 @@ class TestMasoniteStrategy(TestCase):
         self.assertEqual(self.strategy.get_setting("SOCIAL_AUTH_FACEBOOK_SECRET"), 2)
 
     def test_html(self):
-        pass
+        self.assertEqual(self.strategy.render_html(tpl='test.html'), 'test')
+
+        self.assertEqual(self.strategy.render_html(html='test'), b'test')
+
+        self.assertEqual(self.strategy.html(content='test'), b'test')
 
     def test_sessions(self):
         self.strategy.session_set('k', 'v')
         self.assertEqual(self.strategy.session_get('k'), 'v')
         self.assertEqual(self.strategy.session_set('k', 'x'), 'x')
         self.strategy.session_pop('k')
-        self.assertEqual(self.strategy.session_get('k'), 'None')
+        self.assertEqual(self.strategy.session_get('k'), None)
 
     def test_build_absolute_uri(self):
         self.assertEqual(self.strategy.build_absolute_uri('/'), 'http://testserver/')

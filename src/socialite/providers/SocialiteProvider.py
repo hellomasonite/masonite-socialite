@@ -1,12 +1,12 @@
 """A SocialiteProvider Service Provider."""
 
 from masonite.provider import ServiceProvider
-from social_core.backends.facebook import FacebookOAuth2
 
+from socialite.middleware import BackendExistsMiddleware
 from socialite import Socialite
-from socialite.SocialiteManager import SocialiteManager
-from socialite.drivers import SocialiteAuthDriver
+from socialite.managers import SocialiteManager
 from socialite.commands import InstallCommand
+from socialite.drivers import SocialiteAuthDriver
 
 
 class SocialiteProvider(ServiceProvider):
@@ -25,5 +25,4 @@ class SocialiteProvider(ServiceProvider):
         """Boots services required by the container."""
         self.app.bind('Socialite', manager)
         self.app.swap(Socialite, manager)
-
-FacebookOAuth2
+        self.route_middleware({'socialite.backend': BackendExistsMiddleware})

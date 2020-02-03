@@ -54,35 +54,66 @@ from masonite.controllers import Controller
 from masonite.request import Request
 
 from socialite import Socialite
-from socialite.helpers import social_auth
 
 
 class SocialiteController(Controller):
     """Controller For Social Authentication."""
 
-    @social_auth()
     def login(self, request: Request, socialite: Socialite):
         return socialite.driver('auth').redirect()
 
-    @social_auth()
     def callback(self, request: Request, socialite: Socialite):
         user = socialite.driver('auth').user()
         print(user)
         return request.redirect('/home')
 ```
 
-* ## user()
-The user function, return an user instance that is namedtuple class.
-By default, this object has these fields:
+The user function, return an user instance that is namedtuple class. 
+For example, for a github authentication, we have:
 
-```
-uid # the user id provides by the provider
-fullname  # The full name of user
-first_name 
-last_name
-username
-email # if you request for it
-raw_data # the default data retrieves from the provider
+```python
+User(
+  username='corentinalcoy', 
+  email='example@example.com', 
+  fullname='', 
+  first_name='', 
+  last_name='', 
+  access_token='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+  uid=51742802, 
+  raw_data={
+    'access_token': 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 
+    'token_type': 'bearer', 
+    'scope': 'user:email', 
+    'login': 'corentinalcoy', 
+    'id': 51742802, 
+    'node_id': 'MDQ6VXNlcjUxNzQyODAy', 
+    'avatar_url': 'https://avatars3.githubusercontent.com/u/51742802?v=4', 
+    'gravatar_id': '', 
+    'url': 'https://api.github.com/users/corentinalcoy', 
+    'html_url': 'https://github.com/corentinalcoy', 
+    'followers_url': 'https://api.github.com/users/corentinalcoy/followers', 
+    'following_url': 'https://api.github.com/users/corentinalcoy/following{/other_user}', 
+    'gists_url': 'https://api.github.com/users/corentinalcoy/gists{/gist_id}', 
+    'starred_url': 'https://api.github.com/users/corentinalcoy/starred{/owner}{/repo}', 	
+    'subscriptions_url': 'https://api.github.com/users/corentinalcoy/subscriptions', 
+    'organizations_url': 'https://api.github.com/users/corentinalcoy/orgs', 
+    'repos_url': 'https://api.github.com/users/corentinalcoy/repos', 
+    'events_url': 'https://api.github.com/users/corentinalcoy/events{/privacy}', 
+    'received_events_url': 'https://api.github.com/users/corentinalcoy/received_events', 
+    'type': 'User', 
+    'site_admin': False, 'name': None, 
+    'company': None, 'blog': '', 'location': None, 
+    'email': 'example@example.com', 
+    'hireable': None, 'bio': None, 
+    'public_repos': 21, 
+    'public_gists': 0, 
+    'followers': 0, 
+    'following': 4, 
+    'created_at': '2019-06-12T09:32:06Z', 
+    'updated_at': '2020-01-30T17:31:51Z'
+  }, 
+  provider='github'
+)
 ```
 
 You can now access on by using:
@@ -101,18 +132,23 @@ identified and loaded.
 Now you need to define the routes in the **routes/web.py**:
 
 ```python
-from config.socialite import SOCIAL_AUTH_NAMESPACE
+from masonite.routes import Get, RouteGroup, Post
+
+from config.socialite import SOCIAL_AUTH_PREFIX
 
 ROUTES = [
-    ...
-    Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/login', 'SocialiteController@login').name('social.login'),
-    Get(f'/{SOCIAL_AUTH_NAMESPACE}/@backend/callback', 'SocialiteController@callback').name('social.callback'),
-    ...
+    ....
+    RouteGroup([
+        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/login', 'SocialiteController@auth'),
+        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/callback', 'SocialiteController@callback'),
+    ], middleware=('socialite.backend', )),
+    ....
 ]
+
 ```
 
-The uri routes need to be started by **SOCIAL_AUTH_NAMESPACE**
-Without that your callback can be wrong.
+The uri routes need to be started by **SOCIAL_AUTH_PREFIX**
+Without that your callback may be wrong.
 
 ```python
 SOCIAL_AUTH_NAMESPACE = "social"

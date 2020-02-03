@@ -2,8 +2,7 @@ from social_core.utils import sanitize_redirect
 
 
 def do_auth(backend, redirect_name='next'):
-    # Save any defined next value into session
-    data = backend.strategy.request_data(merge=False)
+    data = backend.strategy.request_data(merge=True)
 
     # Save extra data into session.
     for field_name in backend.setting('FIELDS_STORED_IN_SESSION', []):
@@ -32,4 +31,3 @@ def do_complete(backend, user=None, redirect_name='next', *args, **kwargs):
     redirect_value = backend.strategy.session_get(redirect_name, '') or \
                      data.get(redirect_name, '')
     return user
-

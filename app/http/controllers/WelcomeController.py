@@ -5,7 +5,6 @@ from masonite.request import Request
 from masonite.view import View
 
 from socialite import Socialite
-from socialite.helpers import social_auth
 
 
 class WelcomeController(Controller):
@@ -23,11 +22,9 @@ class WelcomeController(Controller):
         """
         return view.render('welcome')
 
-    @social_auth()
     def auth(self, request: Request, socialite: Socialite):
         return socialite.driver('auth').redirect()
 
-    @social_auth()
     def callback(self, request: Request, socialite: Socialite):
         user = socialite.driver('auth').user()
         return request.redirect('/')

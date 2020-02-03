@@ -122,13 +122,6 @@ print(user.username)
 print(user.first_name)
 ```
 
-## Helpers
-1. **social_auth**
-
-This helper is a decorator that implement the logic of how the backends are 
-identified and loaded.
-
-
 Now you need to define the routes in the **routes/web.py**:
 
 ```python

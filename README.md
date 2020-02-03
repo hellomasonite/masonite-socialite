@@ -1,4 +1,6 @@
 # Masonite Socialite
+🤖 Flexible Social Authentication for Masonite Framework.
+
 Make social authentication with all providers supported by 
 [social-auth-core](https://github.com/python-social-auth/social-core) package.
 

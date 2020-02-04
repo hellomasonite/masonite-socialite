@@ -1,7 +1,7 @@
+from masonite.helpers import config
 from masonite.request import Request
 from social_core.exceptions import MissingBackend
 
-from config import socialite
 from socialite.helpers import load_strategy, load_backend
 
 
@@ -14,8 +14,8 @@ class BackendExistsMiddleware:
 
     def before(self):
         backend = self.request.param('backend')
-        if hasattr(socialite, 'SOCIAL_AUTH_PREFIX'):
-            uri = f"{getattr(socialite, 'SOCIAL_AUTH_PREFIX')}/{backend}"
+        if hasattr(config('socialite'), 'SOCIAL_AUTH_PREFIX'):
+            uri = f"{getattr(config('socialite'), 'SOCIAL_AUTH_PREFIX')}/{backend}"
         else:
             uri = f'{backend}'
         uri = f"{uri}/callback"

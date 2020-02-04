@@ -12,3 +12,6 @@ package-lock.json
 .idea
 masonite
 storage/logs/*
+.eggs
+dist/*
+build/*

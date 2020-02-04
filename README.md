@@ -94,8 +94,8 @@ from config.socialite import SOCIAL_AUTH_PREFIX
 ROUTES = [
     ....
     RouteGroup([
-        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/login', 'SocialiteController@auth'),
-        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/callback', 'SocialiteController@callback'),
+        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/login', 'SocialiteController@redirect_to_provider'),
+        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/callback', 'SocialiteController@handle_provider_callback'),
     ], middleware=('socialite.backend', )),
     ....
 ]

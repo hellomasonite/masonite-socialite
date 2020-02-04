@@ -1,10 +1,10 @@
+from masonite.helpers import config
 from social_core.backends.utils import get_backend
 from social_core.utils import setting_name, module_member
 
-from config import socialite
 
-BACKENDS = getattr(socialite, 'SOCIAL_AUTH_AUTHENTICATION_BACKENDS')
-STRATEGY = getattr(socialite, setting_name('STRATEGY'),
+BACKENDS = getattr(config('socialite'), 'SOCIAL_AUTH_AUTHENTICATION_BACKENDS', [])
+STRATEGY = getattr(config('socialite'), setting_name('STRATEGY'),
                    'socialite.strategy.MasoniteStrategy')
 
 

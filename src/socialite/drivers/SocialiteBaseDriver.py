@@ -14,8 +14,8 @@ from socialite.helpers import load_strategy, load_backend
 class SocialiteBaseDriver(BaseDriver):
     def __init__(self, request: Request):
         self.request = request
-        self.backend_str = request.param('backend')
         self._load_backend_and_strategy()
+        self.backend_str = None
 
     def _auth(self):
         return do_auth(self.request.backend)
@@ -39,9 +39,6 @@ class SocialiteBaseDriver(BaseDriver):
     def _load_backend_and_strategy(self):
         redirect_uri = self._get_redirect_uri()
 
-        if not redirect_uri:
-            raise InvalidRedirectUriError(f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI doesn\'t exists')
-
         self.request.social_strategy = load_strategy(self.request)
 
         if not hasattr(self.request, 'strategy'):
@@ -53,13 +50,17 @@ class SocialiteBaseDriver(BaseDriver):
             return self.request.status(404)
 
     def _get_redirect_uri(self):
-        if '-' in self.backend_str:
-            self.backend_str = "_".join(self.backend_str.split("-"))
+        self.backend_str = self.name
+        if '-' in self.name:
+            self.backend_str = "_".join(self.name.split("-"))
         return self.format_redirect(
             getattr(config('socialite'), f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI', None))
 
     def format_redirect(self, redirect: str):
-        if redirect.startswith('/') and redirect:
+        if not redirect:
+            raise InvalidRedirectUriError(f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI doesn\'t exists')
+
+        if redirect.startswith('/'):
             app_url = config('application.URL')
             redirect = f'{app_url.url}{redirect}' if app_url.endswith('/') else f'{app_url}/{redirect}'
         return redirect

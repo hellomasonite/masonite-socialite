@@ -79,16 +79,16 @@ class SocialAuthController(Controller):
 
     def redirect_to_provider(self, request: Request, socialite: Socialite):
         """Redirect the user to the authentication page"""
-        return socialite.driver(request.param('backend')).redirect()
+        return socialite.driver(request.param('provider')).redirect()
 
     def handle_provider_callback(self, request: Request, socialite: Socialite):
         """Obtain the user information"""
-        user = socialite.driver(request.param('backend')).user()
+        user = socialite.driver(request.param('provider')).user()
         # => print(user)
         return request.redirect('/home')
 ```
 
-The ```request.param('backend')``` represents the name of the provider.
+The ```request.param('provider')``` represents the name of the provider.
 
 3. You need to define the routes:
 
@@ -98,8 +98,8 @@ from masonite.routes import Get, RouteGroup
 
 ROUTES = [
     RouteGroup([
-        Get(f'/oauth/@backend/login', 'SocialAuthController@redirect_to_provider'),
-        Get(f'/oauth/@backend/callback', 'SocialAuthController@handle_provider_callback'),
+        Get(f'/oauth/@provider/login', 'SocialAuthController@redirect_to_provider'),
+        Get(f'/oauth/@provider/callback', 'SocialAuthController@handle_provider_callback'),
     ]),
 ]
 ```

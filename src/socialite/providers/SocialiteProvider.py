@@ -2,11 +2,10 @@
 
 from masonite.provider import ServiceProvider
 
-from socialite.middleware import BackendExistsMiddleware
 from socialite import Socialite
-from socialite.managers import SocialiteManager
 from socialite.commands import InstallCommand
-from socialite.drivers import SocialiteAuthDriver
+from socialite.drivers import *
+from socialite.managers import SocialiteManager
 
 
 class SocialiteProvider(ServiceProvider):
@@ -16,8 +15,11 @@ class SocialiteProvider(ServiceProvider):
 
     def register(self):
         """Register objects into the Service Container."""
-        self.app.bind('SocialiteConfig', {})
-        self.app.bind('SocialiteAuthDriver', SocialiteAuthDriver)
+        self.app.bind('SocialiteGoogleDriver', SocialiteGoogleDriver)
+        self.app.bind('SocialiteFacebookDriver', SocialiteFacebookDriver)
+        self.app.bind('SocialiteTwitterDriver', SocialiteTwitterDriver)
+        self.app.bind('SocialiteGithubDriver', SocialiteGithubDriver)
+        self.app.bind('SocialiteLinkedinDriver', SocialiteLinkedinDriver)
         self.app.bind('SocialiteManager', SocialiteManager(self.app))
         self.app.bind('InstallCommand', InstallCommand())
 
@@ -25,4 +27,3 @@ class SocialiteProvider(ServiceProvider):
         """Boots services required by the container."""
         self.app.bind('Socialite', manager)
         self.app.swap(Socialite, manager)
-        self.route_middleware({'socialite.backend': BackendExistsMiddleware})

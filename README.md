@@ -22,7 +22,6 @@ Add the Service Provider to your provider list in `config/providers.py`:
 from socialite.providers import SocialiteProvider
 
 PROVIDERS = [
-    ...
 
     # Third Party Providers
     SocialiteProvider,
@@ -43,22 +42,27 @@ craft socialite:install
 # Facebook
 SOCIAL_AUTH_FACEBOOK_KEY = ''
 SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_FACEBOOK_REDIRECT_URI = ''
 
 # Twitter
 SOCIAL_AUTH_TWITTER_KEY = ''
 SOCIAL_AUTH_TWITTER_SECRET = ''
+SOCIAL_AUTH_TWITTER_REDIRECT_URI = ''
 
 # Google
-SOCIAL_AUTH_GOOGLE_OAUTH_KEY = ''
-SOCIAL_AUTH_GOOGLE_OAUTH_SECRET = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = ''
 
 # Github
 SOCIAL_AUTH_GITHUB_KEY = ''
 SOCIAL_AUTH_GITHUB_SECRET = ''
+SOCIAL_AUTH_GITHUB_REDIRECT_URI = ''
 
 # LinkedIn
 SOCIAL_AUTH_LINKEDIN_KEY = ''
 SOCIAL_AUTH_LINKEDIN_SECRET = ''
+SOCIAL_AUTH_LINKEDIN_OAUTH2_REDIRECT_URI = ''
 ```
 
 2. In your controller, `SocialAuthController` for example, put the following code:
@@ -75,38 +79,29 @@ class SocialAuthController(Controller):
 
     def redirect_to_provider(self, request: Request, socialite: Socialite):
         """Redirect the user to the authentication page"""
-        return socialite.driver('auth').redirect()
+        return socialite.driver(request.param('backend')).redirect()
 
     def handle_provider_callback(self, request: Request, socialite: Socialite):
         """Obtain the user information"""
-        user = socialite.driver('auth').user()
+        user = socialite.driver(request.param('backend')).user()
         # => print(user)
         return request.redirect('/home')
 ```
 
+The ```request.param('backend')``` represents the name of the provider.
+
 3. You need to define the routes:
 
 ```python
-from masonite.routes import Get, RouteGroup, Post
+from masonite.routes import Get, RouteGroup
 
-from config.socialite import SOCIAL_AUTH_PREFIX
 
 ROUTES = [
-    ....
     RouteGroup([
-        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/login', 'SocialAuthController@redirect_to_provider'),
-        Get(f'/{SOCIAL_AUTH_PREFIX}/@backend/callback', 'SocialAuthController@handle_provider_callback'),
-    ], middleware=('socialite.backend', )),
-    ....
+        Get(f'/oauth/@backend/login', 'SocialAuthController@redirect_to_provider'),
+        Get(f'/oauth/@backend/callback', 'SocialAuthController@handle_provider_callback'),
+    ]),
 ]
-
 ```
 
-The uri routes need to be started by **SOCIAL_AUTH_PREFIX**
-Without that your callback may be wrong.
-
-```python
-SOCIAL_AUTH_NAMESPACE = "social"
-```
-
-Visit, [http://localhost:8000/social/facebook/login/](http://localhost:8000/social/facebook/login/)
+Visit, [http://localhost:8000/oauth/facebook/login/](http://localhost:8000/social/facebook/login/)

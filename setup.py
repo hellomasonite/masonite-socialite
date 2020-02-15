@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='masonite-socialite',
-    version='0.0.1',
+    version='0.0.3',
     package_dir={'': 'src'},
     description='Flexible Social Authentication for Masonite Framework',
     long_description=open("README.md", "r", encoding="utf-8").read(),
@@ -32,6 +32,7 @@ setup(
     packages=find_packages('src'),
     install_requires=[
         'social-auth-core==3.2.0',
+        'requests-oauthlib==1.3.0',
     ],
     setup_requires=['wheel'],
     extras_require={

@@ -1,6 +1,11 @@
 from masonite.request import Request
 
 from .SocialiteBaseDriver import SocialiteBaseDriver
+AVAILABLE_PROVIDERS = [
+    'github', 'facebook',
+    'twitter', 'google',
+    'linkedin'
+]
 
 
 class SocialiteFacebookDriver(SocialiteBaseDriver):

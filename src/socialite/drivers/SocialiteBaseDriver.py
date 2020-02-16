@@ -25,9 +25,9 @@ class SocialiteBaseDriver(BaseDriver):
         user_formatted_data["access_token"] = response.get("access_token", "")
         user_formatted_data['uid'] = response.get("id", "")
         user_formatted_data["raw_data"] = response
-        user_formatted_data['provider'] = self.request.backend.name
-        user = namedtuple("User", user_formatted_data.keys())(*user_formatted_data.values())
-        return user
+        user_formatted_data['provider'] = self.request.backend.name.split('-')[0]
+        user_info = namedtuple("User", user_formatted_data.keys())(*user_formatted_data.values())
+        return user_info
 
     def redirect(self):
         return self._auth()
@@ -53,10 +53,10 @@ class SocialiteBaseDriver(BaseDriver):
         self.backend_str = self.name
         if '-' in self.name:
             self.backend_str = "_".join(self.name.split("-"))
-        return self.format_redirect(
+        return self._format_redirect(
             getattr(config('socialite'), f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI', None))
 
-    def format_redirect(self, redirect: str):
+    def _format_redirect(self, redirect: str):
         if not redirect:
             raise InvalidRedirectUriError(f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI doesn\'t exists')
 

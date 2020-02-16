@@ -1,10 +1,11 @@
 """A SocialiteProvider Service Provider."""
+from importlib import import_module
 
 from masonite.provider import ServiceProvider
 
 from socialite import Socialite
 from socialite.commands import InstallCommand
-from socialite.drivers import *
+from socialite.drivers import AVAILABLE_PROVIDERS
 from socialite.managers import SocialiteManager
 
 
@@ -15,11 +16,10 @@ class SocialiteProvider(ServiceProvider):
 
     def register(self):
         """Register objects into the Service Container."""
-        self.app.bind('SocialiteGoogleDriver', SocialiteGoogleDriver)
-        self.app.bind('SocialiteFacebookDriver', SocialiteFacebookDriver)
-        self.app.bind('SocialiteTwitterDriver', SocialiteTwitterDriver)
-        self.app.bind('SocialiteGithubDriver', SocialiteGithubDriver)
-        self.app.bind('SocialiteLinkedinDriver', SocialiteLinkedinDriver)
+        drivers = import_module(f'socialite.drivers')
+        for provider in AVAILABLE_PROVIDERS:
+            driver_name = f'Socialite{provider.capitalize()}Driver'
+            self.app.bind(driver_name, getattr(drivers, driver_name))
         self.app.bind('SocialiteManager', SocialiteManager(self.app))
         self.app.bind('InstallCommand', InstallCommand())
 

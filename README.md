@@ -105,3 +105,18 @@ ROUTES = [
 ```
 
 Visit, [http://localhost:8000/oauth/facebook/login/](http://localhost:8000/social/facebook/login/)
+
+# List of supported providers
+
+- [x] Github
+- [x] Facebook
+- [x] Twitter 
+- [x] Google
+- [x] Linkedin 
+- [ ] Gitlab
+- [ ] Bitbucket 
+- [ ] Trello
+- [ ] Slack 
+- [ ] Instagram
+- [ ] Dropbox 
+- [ ] Pinterest

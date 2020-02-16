@@ -1,22 +1,65 @@
-# Masonite Socialite
+<h1 align="center">Masonite Socialite</h1>
 
-> Flexible Social Authentication for Masonite Framework
+<div align="center">
+  <strong>Flexible Social Authentication for Masonite Framework</strong>
+</div>
 
-Masonite Socialite is an authentication package for Masonite Framework. Extremely flexible and modular, Masonite Socialite supports authentication with Facebook, Twitter, Github, LinkedIn, Google and more.
+<div align="center">
+  <h3>
+    <a href="https://choo.io">
+      Documentation
+    </a>
+    <span> | </span>
+    <a href="https://www.hellomasonite.com/">
+      Our Blog
+    </a>
+    <span> | </span>
+    <a href="https://github.com/choojs/choo/blob/master/.github/CONTRIBUTING.md">
+      Contributing
+    </a>
+    <span> | </span>
+    <a href="https://twitter.com/HelloMasonite">
+      Twitter
+    </a>
+  </h3>
+</div>
 
-Here's a demo of how you can use it:
+## Table of Contents
+- [Example](#example)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Routing](#routing)
+- [Controllers](#controllers)
+- [Providers](#providers)
+- [Support](#support)
+
+## Example
+```python
+class SocialAuthController(Controller):
+    """SocialAuthController Controller Class."""
+
+    def login(self, socialite: Socialite):
+        return socialite.driver('github').redirect()
+
+    def callback(self, view: View, request: Request, socialite: Socialite):
+        user = socialite.driver('github').user()
+        # Your application logic.
+```
 
 ## Installation
 
-You can install the package via `pip`:
+```sh
+# Using pip
+$ pip install masonite-socialite
 
-```bash
-pip install masonite-socialite
+# Using Pipenv
+$ pipenv install masonite-socialite
+
+# Using Poetry
+$ poetry add masonite-socialite
 ```
 
-## Configuration
-
-Add the Service Provider to your provider list in `config/providers.py`:
+Add `SocialiteProvider` to your provider list in `config/providers.py`:
 
 ```python
 from socialite.providers import SocialiteProvider
@@ -28,15 +71,15 @@ PROVIDERS = [
 ]
 ```
 
-This will add a new socialite:install command to craft. Just run:
+This will add a new socialite:install command to craft. Then run in your terminal:
 
 ```bash
 craft socialite:install
 ```
 
-## Usage
+## Configuration
 
-1. Configure your OAuth keys for the provider you want to use in your `.env` file.
+Before using Socialite, you need to get credentials from the provider(s) you want to use. Depending on the providers your application requires, you'll put the right credentials in the `.env` file:
 
 ```python
 # Facebook
@@ -65,7 +108,24 @@ SOCIAL_AUTH_LINKEDIN_SECRET = ''
 SOCIAL_AUTH_LINKEDIN_OAUTH2_REDIRECT_URI = ''
 ```
 
-2. In your controller, `SocialAuthController` for example, put the following code:
+## Routing
+
+You need two routes: one for redirecting the user to the appropriate OAuth provider, and another for receiving the callback from the provider after authentication.
+
+```python
+"""Web Routes."""
+
+from masonite.routes import Get, RouteGroup
+
+ROUTES = [
+    Get('auth/@provider', 'SocialAuthController@login'),
+    Get('auth/@provider/callback', 'SocialAuthController@callback'),
+]
+```
+
+## Controllers
+
+You can access `Socialite` using the Socialite helper:
 
 ```python
 from masonite.controllers import Controller
@@ -79,44 +139,29 @@ class SocialAuthController(Controller):
 
     def redirect_to_provider(self, request: Request, socialite: Socialite):
         """Redirect the user to the authentication page"""
-        return socialite.driver(request.param('provider')).redirect()
+        return socialite.driver(request.provider).redirect()
 
     def handle_provider_callback(self, request: Request, socialite: Socialite):
         """Obtain the user information"""
-        user = socialite.driver(request.param('provider')).user()
+        user = socialite.driver(request.provider).user()
         # => print(user)
         return request.redirect('/home')
 ```
 
-The ```request.param('provider')``` represents the name of the provider.
-
-3. You need to define the routes:
-
-```python
-from masonite.routes import Get, RouteGroup
-
-
-ROUTES = [
-    RouteGroup([
-        Get(f'/oauth/@provider/login', 'SocialAuthController@redirect_to_provider'),
-        Get(f'/oauth/@provider/callback', 'SocialAuthController@handle_provider_callback'),
-    ]),
-]
-```
-
-Visit, [http://localhost:8000/oauth/facebook/login/](http://localhost:8000/social/facebook/login/)
-
-# List of supported providers
+## Providers
 
 - [x] Github
 - [x] Facebook
-- [x] Twitter 
+- [x] Twitter
 - [x] Google
-- [x] Linkedin 
+- [x] Linkedin
 - [ ] Gitlab
-- [ ] Bitbucket 
-- [ ] Trello
-- [ ] Slack 
-- [ ] Instagram
-- [ ] Dropbox 
-- [ ] Pinterest
+
+We are accepting new providers. Send new provider pull requests. You can follow this tutorial to add a new provider.
+
+## Support
+Creating a quality framework takes a lot of time. Unlike others frameworks,
+Masonite Socialite is completely independently funded. We fight for our users. This does mean
+however that we also have to spend time working contracts to pay the bills.
+This is where you can help: by chipping in you can ensure more time is spent
+improving Masonite Socialite rather than dealing with distractions.

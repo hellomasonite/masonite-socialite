@@ -12,7 +12,7 @@ class BaseOAuth1(OAuth1Session):
             return uri
         else:
             if uri.startswith('/'):
-                uri = uri[:-1]
+                uri = uri[1:]
             return f'{self.BASE_URL}/{uri}'
 
     def request(self, method, url, **kwargs):
@@ -30,7 +30,7 @@ class BaseOAuth2(OAuth2Session):
             return uri
         else:
             if uri.startswith('/'):
-                uri = uri[:-1]
+                uri = uri[1:]
             return f'{self.BASE_URL}/{uri}'
 
     def request(

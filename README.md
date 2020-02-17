@@ -6,20 +6,12 @@
 
 <div align="center">
   <h3>
-    <a href="https://choo.io">
-      Documentation
-    </a>
-    <span> | </span>
     <a href="https://www.hellomasonite.com/">
-      Our Blog
-    </a>
-    <span> | </span>
-    <a href="https://github.com/choojs/choo/blob/master/.github/CONTRIBUTING.md">
-      Contributing
+      Read our Blog
     </a>
     <span> | </span>
     <a href="https://twitter.com/HelloMasonite">
-      Twitter
+      Follow us on Twitter
     </a>
   </h3>
 </div>
@@ -43,7 +35,7 @@ class SocialAuthController(Controller):
 
     def callback(self, view: View, request: Request, socialite: Socialite):
         user = socialite.driver('github').user()
-        # Your application logic.
+        # Your application logic here.
 ```
 
 ## Installation
@@ -107,6 +99,8 @@ SOCIAL_AUTH_LINKEDIN_KEY = ''
 SOCIAL_AUTH_LINKEDIN_SECRET = ''
 SOCIAL_AUTH_LINKEDIN_OAUTH2_REDIRECT_URI = ''
 ```
+
+If you don't know how to get those values, you can find a detailed guide here.
 
 ## Routing
 

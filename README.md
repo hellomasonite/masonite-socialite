@@ -68,10 +68,13 @@ SOCIAL_AUTH_LINKEDIN_OAUTH2_REDIRECT_URI = ''
 2. In your controller, `SocialAuthController` for example, put the following code:
 
 ```python
+from masonite.auth import Auth
 from masonite.controllers import Controller
 from masonite.request import Request
 
+from app.User import User
 from socialite import Socialite
+
 
 
 class SocialAuthController(Controller):
@@ -81,11 +84,18 @@ class SocialAuthController(Controller):
         """Redirect the user to the authentication page"""
         return socialite.driver(request.param('provider')).redirect()
 
-    def handle_provider_callback(self, request: Request, socialite: Socialite):
+    def handle_provider_callback(self, request: Request, socialite: Socialite, auth: Auth):
         """Obtain the user information"""
-        user = socialite.driver(request.param('provider')).user()
-        # => print(user)
+        user_info = socialite.driver(request.param('provider')).user()
+
+        user = User.first_or_create(
+            email=user_info.email,
+            name=user_info.username,
+            access_token=user_info.access_token,
+            provider=user_info.provider)
+        auth.once().login_by_id(user.id)
         return request.redirect('/home')
+
 ```
 
 The ```request.param('provider')``` represents the name of the provider.
@@ -105,6 +115,46 @@ ROUTES = [
 ```
 
 Visit, [http://localhost:8000/oauth/facebook/login/](http://localhost:8000/social/facebook/login/)
+
+# Models
+You can now retrieve information from the provider by using the api provider wrapper. 
+1. Modify your model and add the api function
+```python
+"""User Model."""
+
+from config.database import Model
+from socialite.api import ProviderAPI
+
+
+class User(Model):
+    """User Model."""
+
+    __fillable__ = ['name', 'email', 'password', 'provider', 'access_token']
+
+    __auth__ = 'email'
+
+    @property
+    def api(self):
+        return ProviderAPI(self.provider, access_token=self.access_token)
+
+
+```
+2. Use the api wrapper with facebook
+```python
+
+from masonite.controllers import Controller
+from masonite.request import Request
+from masonite.view import View
+
+
+class InfoWelcomeController(Controller):
+    """Controller For Welcoming The User."""
+
+    def show(self, view: View, request: Request):
+        user = request.user()
+        user.api.get("me").json()
+        return view.render('welcome')
+```
 
 # List of supported providers
 

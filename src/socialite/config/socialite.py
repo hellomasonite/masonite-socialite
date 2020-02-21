@@ -8,7 +8,8 @@ from masonite import env
 
 """
  The list of the providers you need to support in your project. 
- More information about the available backends at https://python-social-auth.readthedocs.io/en/latest/backends/index.html
+ More information about the available backends at 
+ https://python-social-auth.readthedocs.io/en/latest/backends/index.html
 """
 
 SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (

@@ -1,7 +1,7 @@
-from masonite.helpers import config
 from social_core.strategy import BaseStrategy, BaseTemplateStrategy
 from social_core.utils import build_absolute_uri
 
+from socialite.helpers import get_config
 from wsgi import container
 from masonite.view import View
 from masonite.response import Response
@@ -45,7 +45,7 @@ class MasoniteStrategy(BaseStrategy):
         return self.request.all()
 
     def request_host(self):
-        return config('application.URL')
+        return get_config('application.URL')
 
     def session_get(self, name, default=None):
         value = self.session.get(name)

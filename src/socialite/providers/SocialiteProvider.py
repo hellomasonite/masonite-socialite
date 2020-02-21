@@ -16,7 +16,7 @@ class SocialiteProvider(ServiceProvider):
 
     def register(self):
         """Register objects into the Service Container."""
-        drivers = import_module(f'socialite.drivers')
+        drivers = import_module('socialite.drivers')
         for provider in AVAILABLE_PROVIDERS:
             driver_name = 'Socialite{provider}Driver'.format(provider=provider.capitalize())
             self.app.bind(driver_name, getattr(drivers, driver_name))

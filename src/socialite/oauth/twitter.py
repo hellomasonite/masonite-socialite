@@ -8,4 +8,4 @@ class TwitterAPI(object):
         client_secret = get_config('socialite.SOCIAL_AUTH_TWITTER_SECRET')
         self.oauth_session = BaseOAuth1(client_id, client_secret=client_secret, resource_owner_key=resource_owner_key,
                                         resource_owner_secret=resource_owner_secret)
-        self.oauth_session.BASE_URL = f'https://api.twitter.com'
+        self.oauth_session.BASE_URL = 'https://api.twitter.com'

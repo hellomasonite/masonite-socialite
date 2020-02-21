@@ -1,5 +1,5 @@
 # Masonite Socialite
-
+[![Build Status](https://travis-ci.org/hellomasonite/masonite-socialite.svg?branch=master)](https://travis-ci.org/hellomasonite/masonite-socialite)
 > Flexible Social Authentication for Masonite Framework
 
 Masonite Socialite is an authentication package for Masonite Framework. Extremely flexible and modular, Masonite Socialite supports authentication with Facebook, Twitter, Github, LinkedIn, Google and more.
@@ -108,8 +108,8 @@ from masonite.routes import Get, RouteGroup
 
 ROUTES = [
     RouteGroup([
-        Get(f'/oauth/@provider/login', 'SocialAuthController@redirect_to_provider'),
-        Get(f'/oauth/@provider/callback', 'SocialAuthController@handle_provider_callback'),
+        Get('/oauth/@provider/login', 'SocialAuthController@redirect_to_provider'),
+        Get('/oauth/@provider/callback', 'SocialAuthController@handle_provider_callback'),
     ]),
 ]
 ```

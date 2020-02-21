@@ -10,4 +10,5 @@ matrix:
       dist: xenial
 install:
   - pip install -r requirements.txt
+  - pip install -e .
 script: python -m pytest

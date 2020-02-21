@@ -13,7 +13,7 @@ class BaseOAuth1(OAuth1Session):
         else:
             if uri.startswith('/'):
                 uri = uri[1:]
-            return f'{self.BASE_URL}/{uri}'
+            return '{BASE_URL}/{uri}'.format(BASE_URL=self.BASE_URL, uri=uri)
 
     def request(self, method, url, **kwargs):
         url = self._build_uri(url)
@@ -31,7 +31,7 @@ class BaseOAuth2(OAuth2Session):
         else:
             if uri.startswith('/'):
                 uri = uri[1:]
-            return f'{self.BASE_URL}/{uri}'
+            return '{BASE_URL}/{uri}'.format(BASE_URL=self.BASE_URL, uri=uri)
 
     def request(
             self,

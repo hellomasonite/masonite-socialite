@@ -1,5 +1,8 @@
 # Masonite Socialite
-[![Build Status](https://travis-ci.org/hellomasonite/masonite-socialite.svg?branch=master)](https://travis-ci.org/hellomasonite/masonite-socialite)
+[![Build Status](https://travis-ci.org/hellomasonite/masonite-socialite.svg?branch=master)](https://travis-ci.org/hellomasonite/masonite-socialite) 
+[![GitHub license](https://img.shields.io/github/license/hellomasonite/masonite-socialite)](https://github.com/hellomasonite/masonite-socialite/blob/master/LICENSE) 
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fhellomasonite%2Fmasonite-socialite%2F)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fhellomasonite%2Fmasonite-socialite)
+
 > Flexible Social Authentication for Masonite Framework
 
 Masonite Socialite is an authentication package for Masonite Framework. Extremely flexible and modular, Masonite Socialite supports authentication with Facebook, Twitter, Github, LinkedIn, Google and more.
@@ -129,16 +132,19 @@ from socialite.api import ProviderAPI
 class User(Model):
     """User Model."""
 
-    __fillable__ = ['name', 'email', 'password', 'provider', 'access_token']
+    __fillable__ = ['name', 'email', 'password', 'provider', 'access_token', 'resource_owner_key', 'resource_owner_secret']
 
     __auth__ = 'email'
 
     @property
     def api(self):
-        return ProviderAPI(self.provider, access_token=self.access_token)
+        return ProviderAPI(self.provider, access_token=self.access_token, 
+        resource_owner_key=self.resource_owner_key, resource_owner_secret=self.resource_owner_secret)
 
 
 ```
+## NB
+If you are not using the providers which support the **oauth1** you don't need to pass the `resource_owner_key`, `resource_owner_secret`.
 2. Use the api wrapper with facebook
 ```python
 

@@ -158,8 +158,5 @@ class SocialAuthController(Controller):
 We are accepting new providers. Send new provider pull requests. You can follow this tutorial to add a new provider.
 
 ## Support
-Creating a quality framework takes a lot of time. Unlike others frameworks,
-Masonite Socialite is completely independently funded. We fight for our users. This does mean
-however that we also have to spend time working contracts to pay the bills.
-This is where you can help: by chipping in you can ensure more time is spent
-improving Masonite Socialite rather than dealing with distractions.
+
+`Masonite Socialite` appreciates help from a wide range of different backgrounds. Small improvements or fixes are always appreciated and issues labeled as easy may be a good starting point. If you are considering larger contributions outside the traditional coding work, please contact us through hellomasonite@gmail.com .

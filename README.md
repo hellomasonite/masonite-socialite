@@ -109,7 +109,7 @@ You need two routes: one for redirecting the user to the appropriate OAuth provi
 ```python
 """Web Routes."""
 
-from masonite.routes import Get, RouteGroup
+from masonite.routes import Get
 
 ROUTES = [
     Get('auth/@provider', 'SocialAuthController@login'),

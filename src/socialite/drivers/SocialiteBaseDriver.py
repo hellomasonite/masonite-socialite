@@ -1,14 +1,13 @@
 from collections import namedtuple
 
 from masonite.drivers import BaseDriver
-from masonite.helpers import config
 from masonite.request import Request
 from social_core.actions import do_auth
 from social_core.exceptions import MissingBackend
 
 from socialite.actions import do_complete
 from socialite.exceptions import InvalidRedirectUriError
-from socialite.helpers import load_strategy, load_backend
+from socialite.helpers import load_strategy, load_backend, get_config
 
 
 class SocialiteBaseDriver(BaseDriver):
@@ -54,13 +53,18 @@ class SocialiteBaseDriver(BaseDriver):
         if '-' in self.name:
             self.backend_str = "_".join(self.name.split("-"))
         return self._format_redirect(
-            getattr(config('socialite'), f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI', None))
+                get_config('socialite.SOCIAL_AUTH_{provider_name}_REDIRECT_URI'
+                           .format(provider_name=self.backend_str.upper())))
 
     def _format_redirect(self, redirect: str):
         if not redirect:
-            raise InvalidRedirectUriError(f'SOCIAL_AUTH_{self.backend_str.upper()}_REDIRECT_URI doesn\'t exists')
+            raise InvalidRedirectUriError(
+                'SOCIAL_AUTH_{provider_name}_REDIRECT_URI '
+                'doesn\'t exists'.format(provider_name=self.backend_str.upper())
+            )
 
         if redirect.startswith('/'):
-            app_url = config('application.URL')
-            redirect = f'{app_url.url}{redirect}' if app_url.endswith('/') else f'{app_url}/{redirect}'
+            app_url = get_config('application.URL')
+            redirect = '{url}{redirect}'.format(url=app_url, redirect=redirect) if app_url.endswith('/') \
+                else '{app_url}/{redirect}'.format(app_url=app_url, redirect=redirect)
         return redirect

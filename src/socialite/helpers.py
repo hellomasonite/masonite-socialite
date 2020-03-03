@@ -2,7 +2,6 @@ from masonite.helpers import config
 from social_core.backends.utils import get_backend
 from social_core.utils import setting_name, module_member
 
-
 BACKENDS = getattr(config('socialite'), 'SOCIAL_AUTH_AUTHENTICATION_BACKENDS', [])
 STRATEGY = getattr(config('socialite'), setting_name('STRATEGY'),
                    'socialite.strategy.MasoniteStrategy')
@@ -20,3 +19,7 @@ def load_strategy(request=None):
 def load_backend(strategy, name, redirect_uri):
     backend = get_backend(BACKENDS, name)
     return backend(strategy, redirect_uri)
+
+
+def get_config(name):
+    return config(name, None)

@@ -15,4 +15,3 @@ storage/logs/*
 .eggs
 dist/*
 build/*
-socialite

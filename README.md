@@ -122,10 +122,13 @@ ROUTES = [
 You can access `Socialite` using the Socialite helper:
 
 ```python
+from masonite.auth import Auth
 from masonite.controllers import Controller
 from masonite.request import Request
 
+from app.User import User
 from socialite import Socialite
+
 
 
 class SocialAuthController(Controller):
@@ -135,11 +138,12 @@ class SocialAuthController(Controller):
         """Redirect the user to the authentication page"""
         return socialite.driver(request.provider).redirect()
 
-    def handle_provider_callback(self, request: Request, socialite: Socialite):
+    def handle_provider_callback(self, request: Request, socialite: Socialite, auth: Auth):
         """Obtain the user information"""
         user = socialite.driver(request.provider).user()
         # => print(user)
         return request.redirect('/home')
+
 ```
 
 ## Providers

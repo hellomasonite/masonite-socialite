@@ -63,7 +63,7 @@ PROVIDERS = [
 ]
 ```
 
-This will add a new socialite:install command to craft. Then run in your terminal:
+This will add a new `socialite:install` command to craft. Then run in your terminal:
 
 ```bash
 craft socialite:install

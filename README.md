@@ -100,7 +100,7 @@ SOCIAL_AUTH_LINKEDIN_SECRET = ''
 SOCIAL_AUTH_LINKEDIN_OAUTH2_REDIRECT_URI = ''
 ```
 
-If you don't know how to get those values, you can find a detailed guide here.
+If you don't know how to get those values, you can find a detailed guide [here](GUIDE.md).
 
 ## Routing
 

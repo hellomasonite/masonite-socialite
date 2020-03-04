@@ -51,7 +51,7 @@ $ pipenv install masonite-socialite
 $ poetry add masonite-socialite
 ```
 
-Add `SocialiteProvider` to your provider list in `config/providers.py`:
+Add `SocialiteProvider` to your providers list in `config/providers.py`:
 
 ```python
 from socialite.providers import SocialiteProvider

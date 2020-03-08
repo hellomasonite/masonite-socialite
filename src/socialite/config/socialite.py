@@ -7,8 +7,8 @@ from masonite import env
 # SOCIAL_AUTH_STRATEGY = "socialite.strategy.MasoniteStrategy"
 
 """
- The list of the providers you need to support in your project. 
- More information about the available backends at 
+ The list of the providers you need to support in your project.
+ More information about the available backends at
  https://python-social-auth.readthedocs.io/en/latest/backends/index.html
 """
 

@@ -12,7 +12,9 @@ install:
 - pip install -r requirements.txt
 - pip install -e .
 - craft install
-script: python -m pytest
+script:
+  - flake8 src/socialite/ --ignore=E501,F401,E128,E402,E731,F821,E712,W503
+  - python -m pytest
 deploy:
   provider: pypi
   user: __token__

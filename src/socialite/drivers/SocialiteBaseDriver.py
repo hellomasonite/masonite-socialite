@@ -45,16 +45,15 @@ class SocialiteBaseDriver(BaseDriver):
 
         try:
             self.request.backend = load_backend(self.request.social_strategy, self.name, redirect_uri)
-        except MissingBackend as e:
+        except MissingBackend:
             return self.request.status(404)
 
     def _get_redirect_uri(self):
         self.backend_str = self.name
         if '-' in self.name:
             self.backend_str = "_".join(self.name.split("-"))
-        return self._format_redirect(
-                get_config('socialite.SOCIAL_AUTH_{provider_name}_REDIRECT_URI'
-                           .format(provider_name=self.backend_str.upper())))
+        return self._format_redirect(get_config(
+            'socialite.SOCIAL_AUTH_{provider_name}_REDIRECT_URI'.format(provider_name=self.backend_str.upper())))
 
     def _format_redirect(self, redirect: str):
         if not redirect:

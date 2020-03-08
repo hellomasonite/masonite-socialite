@@ -16,6 +16,10 @@
   </h3>
 </div>
 
+[![Build Status](https://travis-ci.org/hellomasonite/masonite-socialite.svg?branch=master)](https://travis-ci.org/hellomasonite/masonite-socialite) 
+[![GitHub license](https://img.shields.io/github/license/hellomasonite/masonite-socialite)](https://github.com/hellomasonite/masonite-socialite/blob/master/LICENSE) 
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fhellomasonite%2Fmasonite-socialite%2F)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fhellomasonite%2Fmasonite-socialite)
+
 ## Table of Contents
 - [Example](#example)
 - [Installation](#installation)

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='masonite-socialite',
-    version='0.0.3',
+    version='0.0.6',
     package_dir={'': 'src'},
     description='Flexible Social Authentication for Masonite Framework',
     long_description=open("README.md", "r", encoding="utf-8").read(),

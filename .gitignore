@@ -10,7 +10,6 @@ package-lock.json
 !.env.testing
 *.egg-*
 .idea
-masonite
 storage/logs/*
 .eggs
 dist/*

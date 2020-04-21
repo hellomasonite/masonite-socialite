@@ -116,8 +116,8 @@ You need two routes: one for redirecting the user to the appropriate OAuth provi
 from masonite.routes import Get
 
 ROUTES = [
-    Get('auth/@provider', 'SocialAuthController@login'),
-    Get('auth/@provider/callback', 'SocialAuthController@callback'),
+    Get('auth/@provider', 'SocialAuthController@redirect_to_provider'),
+    Get('auth/@provider/callback', 'SocialAuthController@handle_provider_callback'),
 ]
 ```
 

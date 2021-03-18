@@ -31,7 +31,7 @@ setup(
     keywords='social authentication masonite python',
     packages=find_packages('src'),
     install_requires=[
-        'social-auth-core==3.2.0',
+        'social-auth-core==4.1.0',
         'requests-oauthlib==1.3.0',
     ],
     setup_requires=['wheel'],

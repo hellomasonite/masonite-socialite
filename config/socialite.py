@@ -12,12 +12,20 @@ from masonite import env
 """
 
 SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.linkedin.LinkedinOAuth2',
+    "social_core.backends.amazon.AmazonOAuth2",
+    "social_core.backends.facebook.FacebookOAuth2",
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.github.GithubOAuth2",
+    "social_core.backends.twitter.TwitterOAuth",
+    "social_core.backends.linkedin.LinkedinOAuth2",
 )
+
+"""
+ Amazon
+"""
+SOCIAL_AUTH_AMAZON_KEY = env("SOCIAL_AUTH_AMAZON_KEY")
+SOCIAL_AUTH_AMAZON_SECRET = env("SOCIAL_AUTH_AMAZON_SECRET")
+SOCIAL_AUTH_AMAZON_REDIRECT_URI = env("SOCIAL_AUTH_AMAZON_REDIRECT_URI")
 
 """
  FACEBOOK Configurations
@@ -27,14 +35,14 @@ SOCIAL_AUTH_FACEBOOK_KEY = env("SOCIAL_AUTH_FACEBOOK_KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = env("SOCIAL_AUTH_FACEBOOK_SECRET")
 SOCIAL_AUTH_FACEBOOK_REDIRECT_URI = env("SOCIAL_AUTH_FACEBOOK_REDIRECT_URI")
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id, name, email',
+    "fields": "id, name, email",
 }
 
 """
  GOOGLE OAuth2 Configurations
 """
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
 SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = env("SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI")
 

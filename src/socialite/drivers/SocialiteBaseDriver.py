@@ -5,7 +5,6 @@ from masonite.request import Request
 from social_core.actions import do_auth
 from social_core.exceptions import MissingBackend
 
-from socialite.actions import do_complete
 from socialite.exceptions import InvalidRedirectUriError
 from socialite.helpers import load_strategy, load_backend, get_config
 
@@ -20,7 +19,7 @@ class SocialiteBaseDriver(BaseDriver):
         return do_auth(self.request.backend)
 
     def _complete(self):
-        user_formatted_data, response = do_complete(self.request.backend)
+        user_formatted_data, response = self.request.backend.complete(user=None)
         user_formatted_data["access_token"] = response.get("access_token", "")
         user_formatted_data['uid'] = response.get("id", "")
         user_formatted_data["raw_data"] = response

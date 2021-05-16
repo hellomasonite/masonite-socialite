@@ -3,8 +3,7 @@ from social_core.backends.utils import get_backend
 from social_core.utils import setting_name, module_member
 
 BACKENDS = getattr(config('socialite'), 'SOCIAL_AUTH_AUTHENTICATION_BACKENDS', [])
-STRATEGY = getattr(config('socialite'), setting_name('STRATEGY'),
-                   'socialite.strategy.MasoniteStrategy')
+STRATEGY = getattr(config('socialite'), setting_name('STRATEGY'), 'socialite.strategy.MasoniteStrategy')
 
 
 def get_strategy(strategy, storage, *args, **kwargs):

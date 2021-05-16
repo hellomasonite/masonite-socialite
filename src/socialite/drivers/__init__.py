@@ -37,4 +37,3 @@ class SocialiteGithubDriver(SocialiteBaseDriver):
     def __init__(self, request: Request):
         self.name = 'github'
         super().__init__(request)
-
